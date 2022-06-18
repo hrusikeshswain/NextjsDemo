@@ -10,7 +10,7 @@ function NewMeetUpPage(){
 
   async function onAddMeetup(inputData){
     console.log("onAddMeetup", inputData);
-    const response = await fetch('http://localhost:3000/api/new-meetup',{
+    const response = await fetch('/api/new-meetup',{
        method: 'POST',
        body: JSON.stringify(inputData),
        headers:{
