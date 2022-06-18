@@ -2,7 +2,7 @@
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 import {useRouter} from 'next/router';
 import { Fragment } from "react";
-import Head from 'next/Head';
+import Head from 'next/head';
 
 function NewMeetUpPage(){
 
@@ -30,7 +30,7 @@ function NewMeetUpPage(){
   <Fragment>
     <Head>
       <title>Add Meetup</title>
-      <metadata name="description" content="Add your new meetups and create amazing network opportunities." />
+      <meta name="description" content="Add your new meetups and create amazing network opportunities." />
     </Head>
     <NewMeetupForm onAddMeetup={onAddMeetup}/>
   </Fragment>)
