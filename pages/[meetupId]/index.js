@@ -23,18 +23,13 @@ function meetupDetails(props) {
 //fallback false - paths contain all supported values like if enter m2 get 404 and pregenerate pages like which are vsisted nore frequently
 
 export async function getStaticPaths() {
-  let result;
-  try {
-    const client = await MongoClient.connect(
+  const client = await MongoClient.connect(
         "mongodb+srv://hrusikesh:89MZ5N3uL4YZJiGg@cluster0.x0hfv.mongodb.net/meetups?retryWrites=true&w=majority"
       );
       const db = client.db();
       const meetupcollections = db.collection("meetups");
-      result = await meetupcollections.find({}, { _id: 1 }).toArray();
+      const result = await meetupcollections.find({}, { _id: 1 }).toArray();
       client.close();
-  } catch (error) {
-    
-  }  
   
   return {
     fallback: false,
