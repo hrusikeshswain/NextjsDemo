@@ -23,13 +23,19 @@ function meetupDetails(props) {
 //fallback false - paths contain all supported values like if enter m2 get 404 and pregenerate pages like which are vsisted nore frequently
 
 export async function getStaticPaths() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://hrusikesh:89MZ5N3uL4YZJiGg@cluster0.x0hfv.mongodb.net/meetups?retryWrites=true&w=majority"
-  );
-  const db = client.db();
-  const meetupcollections = db.collection("meetups");
-  const result = await meetupcollections.find({}, { _id: 1 }).toArray();
-  client.close();
+  let result;
+  try {
+    const client = await MongoClient.connect(
+        "mongodb+srv://hrusikesh:89MZ5N3uL4YZJiGg@cluster0.x0hfv.mongodb.net/meetups?retryWrites=true&w=majority"
+      );
+      const db = client.db();
+      const meetupcollections = db.collection("meetups");
+      result = await meetupcollections.find({}, { _id: 1 }).toArray();
+      client.close();
+  } catch (error) {
+    
+  }  
+  
   return {
     fallback: false,
     paths: result.map((meetup) => ({
@@ -39,15 +45,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const meetId = context.params.meetupId;
+    let selectedMeetup;
+  try {
+    const meetId = context.params.meetupId;
   const client = await MongoClient.connect(
     "mongodb+srv://hrusikesh:89MZ5N3uL4YZJiGg@cluster0.x0hfv.mongodb.net/meetups?retryWrites=true&w=majority"
   );
   const db = client.db();
   const meetupcollections = db.collection("meetups");
-  const selectedMeetup = await meetupcollections.findOne({
+  selectedMeetup = await meetupcollections.findOne({
     _id: ObjectId(meetId),
   });
+  } catch (error) {
+    
+  }  
+  
   return {
     props: {
       meetupDetails: {

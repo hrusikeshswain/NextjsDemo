@@ -7,17 +7,22 @@ import Head from 'next/head';
 function NewMeetUpPage(){
 
     const router = new useRouter();
-
+    let response;
   async function onAddMeetup(inputData){
+    try {
+       response = await fetch('/api/new-meetup',{
+        method: 'POST',
+        body: JSON.stringify(inputData),
+        headers:{
+         'Content-Type': 'application/json',
+         'Accept': 'application/json'
+        }
+     });  
+    } catch (error) {
+      
+    }
     console.log("onAddMeetup", inputData);
-    const response = await fetch('/api/new-meetup',{
-       method: 'POST',
-       body: JSON.stringify(inputData),
-       headers:{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-    });
+    
     
     const data = await response.json();
 

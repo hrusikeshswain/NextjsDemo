@@ -43,11 +43,17 @@ function HomePage(props){
 //never execute on their machine
 //revalidate will generate after every 10 secs on server side
 export async function getStaticProps(){
+  let result;
+  try {
     const client = await MongoClient.connect('mongodb+srv://hrusikesh:89MZ5N3uL4YZJiGg@cluster0.x0hfv.mongodb.net/meetups?retryWrites=true&w=majority');
     const db = client.db();
     const meetupcollections  = db.collection('meetups');
-    const result =  await meetupcollections.find().toArray();
+    result =  await meetupcollections.find().toArray();
     client.close();
+  } catch (error) {
+    
+  }
+   
     return{
         props:{
             meetups:result.map((meetup)=>({
